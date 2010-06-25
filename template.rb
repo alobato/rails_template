@@ -2,8 +2,8 @@
 # http://howtocode.com.br/downloads/rails-application-templates.pdf
 # http://github.com/scullygroup/scully-rails-template
 
-def file(file_path)
-  file file_path, open("http://github.com/alobato/rails_template/raw/master/#{file_path}").read
+def file(file_path, origin=open("http://github.com/alobato/rails_template/raw/master/#{file_path}").read)
+  super file_path, origin
 end
 
 run "rm README public/index.html public/javascripts/* doc/README_FOR_APP"
