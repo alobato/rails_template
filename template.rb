@@ -13,40 +13,38 @@ file ".gitignore", open("http://github.com/alobato/rails_template/raw/master/git
 
 ##### Gemfile #####
 # # http://gembundler.com/rails23.html
-# file "config/preinitializer.rb"
-# file "Gemfile"
-# gsub_file "config/boot.rb", "# All that for this:\nRails.boot!", <<-END
-# 
-# class Rails::Boot
-#   def run
-#     load_initializer
-# 
-#     Rails::Initializer.class_eval do
-#       def load_gems
-#         @bundler_loaded ||= Bundler.require :default, Rails.env
-#       end
-#     end
-# 
-#     Rails::Initializer.run(:set_load_path)
-#   end
-# end
-# 
-# # All that for this:
-# Rails.boot!
-# END
+file "config/preinitializer.rb"
+file "Gemfile"
+gsub_file "config/boot.rb", "# All that for this:\nRails.boot!", <<-END
+
+class Rails::Boot
+  def run
+    load_initializer
+
+    Rails::Initializer.class_eval do
+      def load_gems
+        @bundler_loaded ||= Bundler.require :default, Rails.env
+      end
+    end
+
+    Rails::Initializer.run(:set_load_path)
+  end
+end
+
+# All that for this:
+Rails.boot!
+END
 
 ##### gems #####
-gem "authlogic"
-gem "will_paginate"
-gem "settingslogic"
-# gem "attribute_normalizer"
-# gem "searchlogic"
-append_file "config/environments/test.rb", "\nconfig.gem 'rspec', :lib => false"
-append_file "config/environments/test.rb", "\nconfig.gem 'rspec-rails', :lib => false"
-append_file "config/environments/test.rb", "\nconfig.gem 'webrat'"
-append_file "config/environments/test.rb", "\nconfig.gem 'remarkable_rails', :lib => false"
-append_file "config/environments/test.rb", "\nconfig.gem 'factory_girl'"
-append_file "config/environments/development.rb", "\nconfig.gem 'rails-footnotes'"
+# gem "authlogic"
+# gem "will_paginate"
+# gem "settingslogic"
+# append_file "config/environments/test.rb", "\nconfig.gem 'rspec', :lib => false"
+# append_file "config/environments/test.rb", "\nconfig.gem 'rspec-rails', :lib => false"
+# append_file "config/environments/test.rb", "\nconfig.gem 'webrat'"
+# append_file "config/environments/test.rb", "\nconfig.gem 'remarkable_rails', :lib => false"
+# append_file "config/environments/test.rb", "\nconfig.gem 'factory_girl'"
+# append_file "config/environments/development.rb", "\nconfig.gem 'rails-footnotes'"
 
 ##### settingslogic #####
 file "config/application.yml"
