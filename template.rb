@@ -12,34 +12,45 @@ run "rm README public/index.html public/javascripts/* doc/README_FOR_APP"
 file ".gitignore", open("http://github.com/alobato/rails_template/raw/master/gitignore").read
 
 ##### Gemfile #####
-# http://gembundler.com/rails23.html
-file "config/preinitializer.rb"
-file "Gemfile"
-gsub_file "config/boot.rb", "# All that for this:\nRails.boot!", <<-END
+# # http://gembundler.com/rails23.html
+# file "config/preinitializer.rb"
+# file "Gemfile"
+# gsub_file "config/boot.rb", "# All that for this:\nRails.boot!", <<-END
+# 
+# class Rails::Boot
+#   def run
+#     load_initializer
+# 
+#     Rails::Initializer.class_eval do
+#       def load_gems
+#         @bundler_loaded ||= Bundler.require :default, Rails.env
+#       end
+#     end
+# 
+#     Rails::Initializer.run(:set_load_path)
+#   end
+# end
+# 
+# # All that for this:
+# Rails.boot!
+# END
 
-class Rails::Boot
-  def run
-    load_initializer
-
-    Rails::Initializer.class_eval do
-      def load_gems
-        @bundler_loaded ||= Bundler.require :default, Rails.env
-      end
-    end
-
-    Rails::Initializer.run(:set_load_path)
-  end
-end
-
-# All that for this:
-Rails.boot!
-END
+##### gems #####
+gem "authlogic"
+gem "will_paginate"
+gem "settingslogic"
+gem "attribute_normalizer"
+gem "searchlogic"
+append_file "config/environments/test.rb", "config.gem 'rspec', :lib => false"
+append_file "config/environments/test.rb", "config.gem 'rspec-rails', :lib => false"
+append_file "config/environments/test.rb", "config.gem 'webrat'"
+append_file "config/environments/test.rb", "config.gem 'remarkable_rails', :lib => false"
+append_file "config/environments/test.rb", "config.gem 'factory_girl'"
+append_file "config/environments/development.rb", "config.gem 'rails-footnotes'"
 
 ##### settingslogic #####
 file "config/application.yml"
 file "app/models/settings.rb"
-
-
 
 ##### app/controllers #####
 file "app/controllers/activations_controller.rb"
@@ -77,7 +88,6 @@ file "app/views/users/new.html.erb"
 ##### config #####
 file "config/locales/pt-BR.yml", open("http://github.com/svenfuchs/rails-i18n/raw/master/rails/locale/pt-BR.yml").read
 # settingslogic config/application.yml
-# Gemfile config/preinitializer.rb
 # routes config/routes.rb
 # database.yml config/database.yml
 
@@ -182,7 +192,7 @@ run "mkdir -p spec/integration spec/views spec/models spec/controllers spec/fact
 file "spec/support/matchers.rb"
 gsub_file "spec/spec_helper.rb", "#require 'webrat/integrations/rspec-rails'", "require 'webrat/integrations/rspec-rails'"
 gsub_file "spec/spec_helper.rb", "require 'spec/rails'", <<-END
-require 'spec/rails
+require 'spec/rails'
 
 require 'webrat'
 require 'remarkable_rails'
