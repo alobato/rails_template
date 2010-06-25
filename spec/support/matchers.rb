@@ -18,12 +18,19 @@ Spec::Matchers.define :have_post_form_to do |action|
   end
 end
 
-Spec::Matchers.define :have_text_field_for do |attribute, maxlength| 
+Spec::Matchers.define :have_text_field_for do |attribute| 
   match do |response|
     extend Webrat::Matchers
-    have_selector('input', :type => 'text', :name => attribute, :maxlength => maxlength.to_s).matches? response
+    have_selector('input', :type => 'text', :name => attribute).matches? response
   end
 end
+
+# Spec::Matchers.define :have_text_field_for do |attribute, maxlength| 
+#   match do |response|
+#     extend Webrat::Matchers
+#     have_selector('input', :type => 'text', :name => attribute, :maxlength => maxlength.to_s).matches? response
+#   end
+# end
 
 Spec::Matchers.define :have_select_field_for do |attribute| 
   match do |response|

@@ -8,3 +8,5 @@ db/*.sqlite3
 public/cache
 public/system
 doc/*
+.bundle
+cache

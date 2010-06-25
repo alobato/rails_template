@@ -16,9 +16,18 @@ class CreateUsers < ActiveRecord::Migration
       t.datetime  :last_login_at                                     
       t.string    :current_login_ip                                  
       t.string    :last_login_ip
+      
+      t.string    :activation_code
+      t.datetime  :activated_at
+      
+      t.string    :name
 
-      t.timestamps  
-    end  
+      t.timestamps
+    end
+
+    add_index :users, :perishable_token  
+    add_index :users, :activation_code  
+    add_index :users, :email
   end  
   
   def self.down  
