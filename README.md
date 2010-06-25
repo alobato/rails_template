@@ -1,0 +1,1 @@
+rails app_name -m http://github.com/alobato/rails_template/raw/master/template.rb

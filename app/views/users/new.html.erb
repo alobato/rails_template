@@ -1,0 +1,15 @@
+<% title 'Criar conta' %>
+<% javascript 'jquery-1.4.2.min', 'application' %>
+<h1>Crie sua conta</h1>
+
+<% form_for @user, :url => signup_path do |f| -%>
+<%= f.error_messages %>
+<%= f.label :email, 'Email' %><br />
+<%= f.text_field :email %><br />
+<%= f.label :password, 'Senha' %><br />
+<%= f.password_field :password %><br />
+<%= f.label :password_confirmation, 'Repita a senha' %><br />
+<%= f.password_field :password_confirmation %><br />
+<div><%= f.check_box :terms_of_service, :checked => true %><%= f.label :terms_of_service, 'Aceito os <a href="/termos">Termos de Serviço</a>' %></div><br />
+<%= f.submit 'Criar conta' %>
+<% end -%>

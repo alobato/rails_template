@@ -1,0 +1,14 @@
+<% title 'Alterar senha' %>
+<% javascript 'jquery-1.4.2.min', 'application' %>
+<h1>Alterar senha</h1>
+
+<% form_for @user, :url => change_password_path do |f| -%>
+	<%= f.error_messages %>
+	<%= label_tag 'email', 'Senha atual' %><br />
+	<%= f.password_field :old_password %><br />
+	<%= label_tag 'password', "Nova senha" %><br />
+	<%= f.password_field :password %><br />
+	<%= label_tag 'password', 'Repita a nova senha' %><br />
+	<%= f.password_field :password_confirmation %><br />
+	<%= f.submit 'Alterar' %>
+<% end -%>
