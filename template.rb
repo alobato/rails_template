@@ -160,6 +160,7 @@ END
 ##### email #####
 file "lib/smtp_tls.rb"
 append_file "config/environments/development.rb", <<-END
+
 require 'smtp_tls'
 config.action_mailer.smtp_settings = {
   :enable_starttls_auto => true, 
@@ -172,6 +173,7 @@ config.action_mailer.smtp_settings = {
 }
 END
 append_file "config/environments/production.rb", <<-END
+
 ActionMailer::Base.smtp_settings = {
   :address => 'localhost',
   :port => 25,
