@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     
     if @user.save
       flash[:notice] = 'Sua conta foi criada com sucesso! Acesse seu email e leia as instruções enviadas para validar sua conta.<br />Se você não receber uma mensagem em sua caixa de entrada dentro de 5 minutos, verifique a pasta de "Spam" ou "Lixo Eletrônico".'
-      redirect_to welcome_path
+      redirect_to '/'
     else
       @user.password = @user.password_confirmation = nil
       render :new

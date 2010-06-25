@@ -146,9 +146,12 @@ run "mkdir -p spec/integration spec/views spec/models spec/controllers spec/fact
 file "spec/support/matchers.rb"
 gsub_file "spec/spec_helper.rb", "#require 'webrat/integrations/rspec-rails'", "require 'webrat/integrations/rspec-rails'"
 gsub_file "spec/spec_helper.rb", "require 'spec/rails'", <<-END
+require 'spec/rails
+
 require 'webrat'
 require 'remarkable_rails'
 require 'factory_girl'
+
 Webrat.configure do |config|
   config.mode = :rails
 end
