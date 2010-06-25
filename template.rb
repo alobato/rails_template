@@ -2,15 +2,19 @@
 # http://howtocode.com.br/downloads/rails-application-templates.pdf
 # http://github.com/scullygroup/scully-rails-template
 
+def file(file_path)
+  file file_path, open("http://github.com/alobato/rails_template/raw/master/#{file_path}").read
+end
+
 run "rm README public/index.html public/javascripts/* doc/README_FOR_APP"
 
 ##### .gitignore #####
-file ".gitignore", open("").read
+file ".gitignore", open("http://github.com/alobato/rails_template/raw/master/gitignore").read
 
 ##### Gemfile #####
 # http://gembundler.com/rails23.html
-file "config/preinitializer.rb", open("").read
-file "Gemfile", open("").read
+file "config/preinitializer.rb"
+file "Gemfile"
 gsub_file "config/boot.rb", "# All that for this:\nRails.boot!", <<-END
 
 class Rails::Boot
@@ -32,45 +36,45 @@ Rails.boot!
 END
 
 ##### settingslogic #####
-file "config/application.yml", open("").read
-file "app/models/settings.rb", open("").read
+file "config/application.yml"
+file "app/models/settings.rb"
 
 ##### javascripts #####
 file "public/javascripts/jquery-1.4.2.min.js", open("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js").read
-file "public/javascripts/application.js", open("").read
+file "public/javascripts/application.js"
 
 ##### stylesheets #####
-file "public/stylesheets/reset.css", open("").read
-file "public/stylesheets/960.css", open("").read
-file "public/stylesheets/application.css", open("").read
+file "public/stylesheets/reset.css"
+file "public/stylesheets/960.css"
+file "public/stylesheets/application.css"
 
 ##### helpers #####
-file "app/helpers/application_helper.rb", open("").read
+file "app/helpers/application_helper.rb"
 
 ##### models #####
-file "app/models/user.rb", open("").read
-file "app/models/user_session.rb", open("").read
+file "app/models/user.rb"
+file "app/models/user_session.rb"
 
 ##### controllers #####
-file "app/controllers/application_controller.rb", open("").read
-file "app/controllers/users_controller.rb", open("").read
-file "app/controllers/user_sessions_controller.rb", open("").read
-file "app/controllers/passwords_controller.rb", open("").read
-file "app/controllers/home_controller.rb", open("").read
+file "app/controllers/application_controller.rb"
+file "app/controllers/users_controller.rb"
+file "app/controllers/user_sessions_controller.rb"
+file "app/controllers/passwords_controller.rb"
+file "app/controllers/home_controller.rb"
 
 ##### views #####
-file "app/views/layouts/application.html.erb", open("").read
-file "app/views/shared/_header.html.erb", open("").read
-file "app/views/shared/_footer.html.erb", open("").read
-file "app/views/shared/_codes.html.erb", open("").read
-file "app/views/passwords/new.html.erb", open("").read
-file "app/views/passwords/edit.html.erb", open("").read
-file "app/views/users/new.html.erb", open("").read
-file "app/views/user_sessions/new.html.erb", open("").read
-file "app/views/home/index.html.erb", open("").read
+file "app/views/layouts/application.html.erb"
+file "app/views/shared/_header.html.erb"
+file "app/views/shared/_footer.html.erb"
+file "app/views/shared/_codes.html.erb"
+file "app/views/passwords/new.html.erb"
+file "app/views/passwords/edit.html.erb"
+file "app/views/users/new.html.erb"
+file "app/views/user_sessions/new.html.erb"
+file "app/views/home/index.html.erb"
 
 ##### migration #####
-file "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_create_users.rb", open("").read
+file "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_create_users.rb", open("http://github.com/alobato/rails_template/raw/master/db/migrate/create_users.rb").read
 
 ##### locales #####
 file "config/locales/pt-BR.yml", open("http://github.com/svenfuchs/rails-i18n/raw/master/rails/locale/pt-BR.yml").read
@@ -139,7 +143,7 @@ END
 run "rm -rf test"
 generate :rspec
 run "mkdir -p spec/integration spec/views spec/models spec/controllers spec/factories"
-file "spec/support/matchers.rb", open("").read
+file "spec/support/matchers.rb"
 gsub_file "spec/spec_helper.rb", "#require 'webrat/integrations/rspec-rails'", "require 'webrat/integrations/rspec-rails'"
 gsub_file "spec/spec_helper.rb", "require 'spec/rails'", <<-END
 require 'webrat'
@@ -151,7 +155,7 @@ end
 END
 
 ##### email #####
-lib "smtp_tls.rb", open("").read
+file "lib/smtp_tls.rb"
 append_file "config/environments/development.rb", <<-END
 require 'smtp_tls'
 config.action_mailer.smtp_settings = {
