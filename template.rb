@@ -84,7 +84,9 @@ file "app/views/user_sessions/new.html.erb"
 file "app/views/users/new.html.erb"
 
 ##### config #####
-file "config/locales/pt-BR.yml", open("http://github.com/svenfuchs/rails-i18n/raw/master/rails/locale/pt-BR.yml").read
+file "config/locales/pt-BR.yml"
+gsub_file "config/environment.rb", "  # config.i18n.default_locale = :de", "  config.i18n.default_locale = 'pt-BR'"
+
 # settingslogic config/application.yml
 # routes config/routes.rb
 # database.yml config/database.yml

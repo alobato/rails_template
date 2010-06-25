@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def title(title)
-    content_for(:title) { concat("#{title} - Mercado de Livros") }
+    content_for(:title) { concat("#{title}") }
   end
 
   def javascript(*sources)
