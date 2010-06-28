@@ -36,7 +36,7 @@ file ".gitignore", open("http://github.com/alobato/rails_template/raw/master/git
 # END
 
 ##### gems #####
-gem "authlogic"
+
 gem "will_paginate"
 gem "settingslogic"
 gem "attribute_normalizer"
@@ -53,13 +53,7 @@ append_file "config/environments/development.rb", "\nconfig.gem 'rails-footnotes
 file "config/application.yml"
 file "app/models/settings.rb"
 
-##### app/controllers #####
-file "app/controllers/activations_controller.rb"
-file "app/controllers/application_controller.rb"
-file "app/controllers/home_controller.rb"
-file "app/controllers/passwords_controller.rb"
-file "app/controllers/user_sessions_controller.rb"
-file "app/controllers/users_controller.rb"
+
 
 ##### app/helpers #####
 file "app/helpers/application_helper.rb"
@@ -234,5 +228,16 @@ ActionMailer::Base.smtp_settings = {
   :domain => 'domain.com'
 }
 END
+
+##### app/controllers #####
+file "app/controllers/activations_controller.rb"
+file "app/controllers/application_controller.rb"
+file "app/controllers/home_controller.rb"
+file "app/controllers/passwords_controller.rb"
+file "app/controllers/user_sessions_controller.rb"
+file "app/controllers/users_controller.rb"
+
+
+gem "authlogic"
 
 # TODO: Admin
