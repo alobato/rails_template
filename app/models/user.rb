@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
   
   validates_acceptance_of :terms_of_service
   
-  def first_name(user)
-    user.name.split(' ')[0] unless user.name.blank?
+  def first_name
+    name.split(' ')[0] unless name.blank?
   end
 
   def active?
@@ -25,8 +25,16 @@ class User < ActiveRecord::Base
   
   private
   
+  def secure_digest(*args)
+    Digest::SHA1.hexdigest(args.flatten.join('--'))
+  end
+
+  def make_token
+    secure_digest(Time.now, (1..10).map{ rand.to_s })
+  end
+
   def set_new_activation_code
-    self.activation_code = self.class.make_token[0, 10]
+    self.activation_code = make_token[0, 10]
   end
 
 end

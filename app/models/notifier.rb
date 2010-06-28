@@ -3,7 +3,7 @@ class Notifier < ActionMailer::Base
   def activation_instructions(user)
     setup_email(user)
     subject "Valide seu email"
-    body    :complete_activation_url => activation_url(user.activation_code)
+    body    :complete_activation_url => "http://www.domain.com/v/#{user.activation_code}"
   end
 
   def activation_confirmation(user)
@@ -14,7 +14,7 @@ class Notifier < ActionMailer::Base
   def password_reset_instructions(user)
     setup_email(user)
     subject "Instruções para gerar nova senha"
-    body    :complete_reset_password_url => reset_password_url(user.perishable_token)
+    body    :complete_reset_password_url => "http://www.domain.com/s/#{user.perishable_token}"
   end
 
   def new_password(user)
