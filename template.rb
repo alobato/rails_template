@@ -48,6 +48,7 @@ append_file "config/environments/test.rb", "\nconfig.gem 'webrat'"
 append_file "config/environments/test.rb", "\nconfig.gem 'remarkable_rails', :lib => false"
 append_file "config/environments/test.rb", "\nconfig.gem 'factory_girl'"
 append_file "config/environments/development.rb", "\nconfig.gem 'rails-footnotes'"
+rake "gems:install"
 
 ##### settingslogic #####
 file "config/application.yml"
