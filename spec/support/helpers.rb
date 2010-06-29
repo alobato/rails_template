@@ -3,6 +3,7 @@ def create_user(options = {})
 end
 
 def create_and_active_user
+  # TODO: Acertar a ativação
   Factory(:valid_user)
   User.find_by_email('email@email.com').update_attribute(:activation_code, nil)
 end

@@ -1,13 +1,12 @@
 <% title 'Login' %>
-<% javascript 'jquery-1.4.2.min', 'application' %>
-<h1>Faça login</h1>
+<h1>Login</h1>
 
 <% form_for @user_session, :url => login_path do |f| %>
   <%= f.error_messages %>
-  <%= f.label :email, 'Email' %><br />
+  <%= f.label :email %><br />
   <%= f.text_field :email %><br />
-  <%= f.label :password, "Senha<span class='tip'>#{ link_to 'Esqueceu a senha?', recover_password_path }</span>" %><br />
+  <%= f.label :password %><br />
   <%= f.password_field :password %><br />
-  <%= f.check_box :remember_me %><%= f.label :remember_me, 'Continuar conectado' %><br />
+  <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
   <%= f.submit 'Login' %>
 <% end %>

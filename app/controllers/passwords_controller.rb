@@ -15,7 +15,7 @@ class PasswordsController < ApplicationController
       flash[:notice] = "As instruções para gerar uma nova senha foram enviadas para #{user.email}"
       redirect_to login_path
     else
-      flash.now[:error] =  "Email não encontrado.<br />Forneça o email que utilizou ao criar sua conta."
+      flash.now[:error] =  'Email não encontrado.<br />Forneça o email que utilizou ao criar sua conta.'
       render :new
     end
   end
@@ -29,7 +29,7 @@ class PasswordsController < ApplicationController
       flash[:notice] = "Uma nova senha foi gerada e enviada para #{user.email}"
       redirect_to login_path
     else
-      flash.now[:error] = "Código não encontrado. A nova senha não foi gerada."
+      flash.now[:error] = 'Código não encontrado. A nova senha não foi gerada.'
       render :new
     end
   end
@@ -45,7 +45,7 @@ class PasswordsController < ApplicationController
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
       if @user.save
-        flash[:notice] = "A senha foi alterada com sucesso!"
+        flash[:notice] = 'A senha foi alterada com sucesso!'
         redirect_to root_path
       else
         render :edit

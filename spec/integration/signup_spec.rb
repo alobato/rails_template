@@ -19,15 +19,17 @@ describe 'Sign up' do
   
   subject { response.body }
 
-  it 'should redirect when signup with valid email and password' do
+  it 'should display successful message when signup with valid email and password' do
     signup_user
+    should have(successful_signup_message)
     should_not have_post_form_to(signup_path)
   end
 
   it 'should display error message when signup with invalid email and password' do
     signup_user('email.com', '123')
-    should have(save_error_message(2))
+    should have(save_error_message(3))
     should have_post_form_to(signup_path)
+    should_not have(successful_signup_message)
   end
 
   it 'should not display signup form when user already logged in' do

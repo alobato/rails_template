@@ -11,7 +11,7 @@ class ActivationsController < ApplicationController
       flash[:notice] = 'Acesse seu email e leia as instruções enviadas para validar sua conta.<br />Se você não receber uma mensagem em sua caixa de entrada dentro de 5 minutos, verifique a pasta de "Spam" ou "Lixo Eletrônico".'
       redirect_to root_path
     else 
-      flash[:error]  = "Sua conta já foi validada."
+      flash[:error]  = 'Sua conta já foi validada.'
       render :new
     end
   end
@@ -21,9 +21,9 @@ class ActivationsController < ApplicationController
     if user = User.find_by_activation_code(params[:activation_code])
       user.activate!
       Notifier.deliver_activation_confirmation(user)
-      flash[:notice] = "Sua conta foi validada com sucesso! Por favor, faça login para continuar."
+      flash[:notice] = 'Sua conta foi validada com sucesso! Por favor, faça login para continuar.'
     else
-      flash[:error]  = "Não encontramos este código de validação. Você já deve ter validado."
+      flash[:error]  = 'Não encontramos este código de validação. Você já deve ter validado.'
     end
     redirect_to login_path
   end

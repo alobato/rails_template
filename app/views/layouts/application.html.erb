@@ -12,25 +12,24 @@
 </head>
 
 <body>
-	
+
 <div id="container">
 
 	<%= render 'shared/header' %>
 
 	<div id="content">
-		<div class="container_16">
-			<%= flash_message %>
-			<%= yield %>
-		</div><!-- /.container_16 -->
-	</div><!-- /#content -->
 
-	<div class="clear"></div>
+		<%= flash_messages %>
+
+		<%= yield %>
+
+	</div><!-- /#content -->
 
 	<%= render 'shared/footer' %>
 
 </div><!-- /#container -->
 
-<%= yield :bottom %>
 <%= render 'shared/codes' %>
+
 </body>
 </html>
