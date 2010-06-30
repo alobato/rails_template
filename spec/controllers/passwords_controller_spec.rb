@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PasswordsController, 'POST create' do
 
   context 'when found user by email' do
-    let(:user) { mock_model(User, :save => nil, :password_reset_code= => nil, :email => 'email@email.com', :password_reset_code => '123', :name => 'Joao') }
+    let(:user) { mock_model(User, :save => nil, :password_reset_code= => nil, :email => 'email@email.com', :first_name => 'Pedro', :perishable_token => '123', :reset_perishable_token => nil, :password_reset_code => '123', :name => 'Joao') }
     before { User.stub(:find_by_email).with('email@email.com').and_return(user) }
 
     it 'find by email' do
@@ -50,7 +50,7 @@ end
 describe PasswordsController, 'GET reset' do
 
   context 'when found user by password_reset_code' do
-    let(:user) { mock_model(User, :email => 'email@email.com', :name => nil, :password= => nil, :password => nil, :password_confirmation= => nil, :perishable_token= => nil, :save => nil) }
+    let(:user) { mock_model(User, :email => 'email@email.com', :name => nil, :first_name => 'Pedro', :password= => nil, :password => nil, :password_confirmation= => nil, :perishable_token= => nil, :save => nil, :save_without_session_maintenance => nil) }
     before { User.stub(:find_using_perishable_token).with('1234567890').and_return(user) }
 
     it 'find by password_reset_code' do
@@ -64,7 +64,7 @@ describe PasswordsController, 'GET reset' do
     end
   
     it 'save user' do
-      user.should_receive(:save).with(false)
+      user.should_receive(:save_without_session_maintenance).with(false)
       get_reset_password
     end
     
@@ -109,7 +109,7 @@ describe PasswordsController, 'PUT update' do
   context 'when current password is ok' do
     let(:user) { mock_model(User, :valid_password? => true, :password= => nil, :password_confirmation= => nil) }
     before do
-      @controller.current_user = user
+      @controller.stub(:current_user).and_return(user)
     end
   
     it 'sets flash[:notice] and redirects to home' do

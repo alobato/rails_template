@@ -31,12 +31,12 @@ describe 'Sign up' do
     should have_post_form_to(signup_path)
     should_not have(successful_signup_message)
   end
-
-  it 'should not display signup form when user already logged in' do
+  
+  it 'should display alert message when user already logged in' do
     create_user
     login_user
     visit signup_path
-    should_not have_post_form_to(signup_path)
+    should have("Você não pode estar logado para acessar esta página.")
   end
 
 end

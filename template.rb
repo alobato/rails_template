@@ -242,3 +242,9 @@ file "app/controllers/users_controller.rb"
 gem "authlogic"
 
 # TODO: Admin
+
+rake "db:create:all"
+rake "db:migrate"
+rake "db:test:prepare"
+
+

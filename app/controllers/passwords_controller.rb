@@ -10,8 +10,8 @@ class PasswordsController < ApplicationController
 
   def create
     if user = User.find_by_email(params[:email])
-      reset_perishable_token!
-      Notifier.deliver_password_reset_instructions(self)
+      user.reset_perishable_token
+      Notifier.deliver_password_reset_instructions(user)
       flash[:notice] = "As instruções para gerar uma nova senha foram enviadas para #{user.email}"
       redirect_to login_path
     else
@@ -21,10 +21,10 @@ class PasswordsController < ApplicationController
   end
 
   def reset
-    current_user_session.destroy
+    current_user_session.destroy if current_user_session
     if user = User.find_using_perishable_token(params[:password_reset_code])
       user.password = user.password_confirmation = random_password
-      user.save(false)
+      user.save_without_session_maintenance(false)
       Notifier.deliver_new_password(user)
       flash[:notice] = "Uma nova senha foi gerada e enviada para #{user.email}"
       redirect_to login_path

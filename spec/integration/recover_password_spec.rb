@@ -42,13 +42,13 @@ describe 'Recover password' do
   context 'when user access reset password url' do
 
     it 'should send new password when access valid reset url' do
-      create_user(:password_reset_code => '1234567890')
-      visit reset_password_path('1234567890')
+      perishable_token = create_user.perishable_token
+      visit reset_password_path(perishable_token)
       should have(successful_generated_and_sent_password_message)
     end
     
     it 'should send new password when access invalid reset url' do
-      create_user(:password_reset_code => '1234567890')
+      create_user
       visit reset_password_path('123')
       should have(reset_password_code_not_found_message)
     end

@@ -17,7 +17,7 @@ class ActivationsController < ApplicationController
   end
   
   def activate
-    current_user_session.destroy
+    current_user_session.destroy if current_user_session
     if user = User.find_by_activation_code(params[:activation_code])
       user.activate!
       Notifier.deliver_activation_confirmation(user)

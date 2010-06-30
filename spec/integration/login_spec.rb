@@ -15,14 +15,12 @@ require 'spec_helper'
 #     Then I should be redirected to main page or origin page
 
 describe 'Login' do
-  # TODO: testar quando tiver que redirecionar para a pagina de origem
 
   before{ create_user }
   subject { response.body }
 
   it 'should redirect to main page when login with valid email and password' do
-    login_user
-    # TODO: adicionar spec para saber se foi redirecionado
+    login_user('email@email.com', '123456')
     should have('email@email.com')
     should_not have(invalid_login_message)
     should_not have_post_form_to(login_path)
@@ -30,11 +28,12 @@ describe 'Login' do
 
   it 'should display error message when login with invalid email and password' do
     login_user('email2@email.com', '123456')
-    should have(invalid_login_message)
+    should have(save_error_message(1))
     should have_post_form_to(login_path)
   end
 
   it 'should not display logged email when logout' do
+    login_user('email@email.com', '123456')
     visit logout_path
     should_not have('email@email.com')
   end

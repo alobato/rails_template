@@ -8,19 +8,30 @@ describe User do
     :current_login_ip, :last_login_ip, :activated_at
 
   should_validate_acceptance_of   :terms_of_service
-  should_validate_presence_of     :email
-  should_validate_presence_of     :password
-  should_validate_presence_of     :password_confirmation
   should_validate_confirmation_of :password
 
   should_allow_values_for :email, 'joao@joao.com', ' joao@js.com'
   should_allow_values_for :password, 'as3a$#aA'
-  should_allow_values_for :screen_name, 'jo', 'joao123a', 'asdfghjklqwerty', 'Jas231f', 'jas_teste', '_a'
   should_allow_values_for :name, 'João', 'Ana', 'Pedro Paulo da Silva Pereira Sergio Alcantara Moreira'
 
-  should_not_allow_values_for :email, '@joao.com', ' j@j', 'as', 'email1@gmail.com.br', 'email1@hotmail.com.br', 'email1@mailinator.com'
-  should_not_allow_values_for :password, '12345'
-  should_not_allow_values_for :name, 'a', 'ab'
+  should_not_allow_values_for :email, '@joao.com', ' j@j', 'as'
+  should_not_allow_values_for :password, '123'
+
+  it 'should be valid' do
+    Factory.build(:valid_user).should be_valid
+  end
+
+  it 'should require presence of email' do
+    Factory.build(:valid_user, :email => '').should_not be_valid
+  end
+
+  it 'should require presence of password' do
+    Factory.build(:valid_user, :password => '').should_not be_valid
+  end
+  
+  it 'should require presence of password confirmation' do
+    Factory.build(:valid_user, :password_confirmation => '').should_not be_valid
+  end
   
   it 'saves new user sucessfully' do
     lambda { Factory(:valid_user) }.should change(User, :count).by(1)
@@ -28,12 +39,6 @@ describe User do
   
   it 'should not saves new user' do
     lambda { Factory(:invalid_user) }.should raise_error
-  end
-  
-  it 'should not update user with update_attributes' do
-    user = Factory(:valid_user)
-    user.update_attributes(:email => 'email2@email2.com')
-    User.find_by_email('email2@email2.com') == nil
   end
 
 end
