@@ -11,89 +11,55 @@ run "rm README public/index.html public/javascripts/* doc/README_FOR_APP"
 ##### .gitignore #####
 file ".gitignore", open("http://github.com/alobato/rails_template/raw/master/gitignore").read
 
-##### Gemfile #####
-# # http://gembundler.com/rails23.html
-# file "config/preinitializer.rb"
-# file "Gemfile"
-# gsub_file "config/boot.rb", "# All that for this:\nRails.boot!", <<-END
-# 
-# class Rails::Boot
-#   def run
-#     load_initializer
-# 
-#     Rails::Initializer.class_eval do
-#       def load_gems
-#         @bundler_loaded ||= Bundler.require :default, Rails.env
-#       end
-#     end
-# 
-#     Rails::Initializer.run(:set_load_path)
-#   end
-# end
-# 
-# # All that for this:
-# Rails.boot!
-# END
-
 ##### gems #####
-
 gem "will_paginate"
 gem "settingslogic"
 gem "attribute_normalizer"
 gem "vestal_versions"
 gem "resource_controller"
 gem "flash_messages_helper"
+gem "warden"
+gem "devise"
 append_file "config/environments/test.rb", "\nconfig.gem 'rspec', :lib => false"
 append_file "config/environments/test.rb", "\nconfig.gem 'rspec-rails', :lib => false"
 append_file "config/environments/test.rb", "\nconfig.gem 'webrat'"
 append_file "config/environments/test.rb", "\nconfig.gem 'remarkable_rails', :lib => false"
 append_file "config/environments/test.rb", "\nconfig.gem 'factory_girl'"
 append_file "config/environments/development.rb", "\nconfig.gem 'rails-footnotes'"
+append_file "config/environments/development.rb", "\nconfig.action_mailer.default_url_options = { :host => 'localhost:3000' }"
 
 ##### settingslogic #####
 file "config/application.yml"
 file "app/models/settings.rb"
 
-
-
 ##### app/helpers #####
 file "app/helpers/application_helper.rb"
 
 ##### app/models #####
-file "app/models/notifier.rb"
+file "app/models/admin.rb"
 file "app/models/user.rb"
-file "app/models/user_session.rb"
-# settingslogic app/models/settings.rb
+#>>> settingslogic app/models/settings.rb
 
 ##### app/views #####
-file "app/views/activations/new.html.erb"
 file "app/views/home/index.html.erb"
 file "app/views/layouts/application.html.erb"
-file "app/views/notifier/activation_confirmation.erb"
-file "app/views/notifier/activation_instructions.erb"
-file "app/views/notifier/new_password.erb"
-file "app/views/notifier/password_reset_instructions.erb"
-file "app/views/passwords/edit.html.erb"
-file "app/views/passwords/new.html.erb"
 file "app/views/shared/_codes.html.erb"
 file "app/views/shared/_footer.html.erb"
 file "app/views/shared/_header.html.erb"
-file "app/views/user_sessions/new.html.erb"
-file "app/views/users/new.html.erb"
 
 ##### config #####
 file "config/locales/pt-BR.yml"
 gsub_file "config/environment.rb", "  # config.i18n.default_locale = :de", "  config.i18n.default_locale = 'pt-BR'"
-
-# settingslogic config/application.yml
-# routes config/routes.rb
-# database.yml config/database.yml
+#>>> settingslogic config/application.yml
+#>>> routes config/routes.rb
+#>>> database.yml config/database.yml
 
 ##### db/migrate #####
 file "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_create_users.rb", open("http://github.com/alobato/rails_template/raw/master/db/migrate/create_users.rb").read
+file "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_create_admins.rb", open("http://github.com/alobato/rails_template/raw/master/db/migrate/create_admins.rb").read
 
 ##### lib #####
-# email lib/smtp_tls.rb
+#>>> email lib/smtp_tls.rb
 
 ##### public/javascripts #####
 file "public/javascripts/jquery-1.4.2.min.js", open("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js").read
@@ -155,33 +121,15 @@ END
 
 ##### routes #####
 route "map.root :controller => 'home'"
-
-route "map.resources :users"
-route "map.signup '/criar-conta', :controller => 'users', :action => 'new', :conditions => { :method => :get }"
-route "map.signup '/criar-conta', :controller => 'users', :action => 'create', :conditions => { :method => :post }"
-route "map.my_account '/minha-conta', :controller => 'users', :action => 'edit', :conditions => { :method => :get }"
-route "map.my_account '/minha-conta', :controller => 'users', :action => 'update', :conditions => { :method => :put }"
-route "map.activation '/v/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil, :conditions => { :method => :get }"
-
-route "map.resources :user_sessions"
-route "map.login '/login', :controller => 'user_sessions', :action => 'new', :conditions => { :method => :get }"
-route "map.login '/login', :controller => 'user_sessions', :action => 'create', :conditions => { :method => :post }"
-route "map.logout '/sair', :controller => 'user_sessions', :action => 'destroy'"
-
-route "map.resources :passwords"
-route "map.change_password '/alterar-senha', :controller => 'passwords', :action => 'edit', :conditions => { :method => :get }"
-route "map.change_password '/alterar-senha', :controller => 'passwords', :action => 'update', :conditions => { :method => :put }"
-route "map.recover_password '/recuperar-senha', :controller => 'passwords', :action => 'new', :conditions => { :method => :get }"
-route "map.recover_password '/recuperar-senha', :controller => 'passwords', :action => 'create', :conditions => { :method => :post }"
-route "map.reset_password '/s/:password_reset_code', :controller => 'passwords', :action => 'reset', :password_reset_code => nil, :conditions => { :method => :get }"
-
-route <<-END
-
-  map.namespace :admin do |admin|
-    admin.resources :home
-    admin.resources :users, :as => 'usuarios', :path_names => { :new => 'novo', :edit => 'editar' }
-  end
-END
+route "map.devise_for :users"
+route "map.devise_for :admin"
+# route <<-END
+# 
+#   map.namespace :admin do |admin|
+#     admin.resources :home
+#     admin.resources :users, :as => 'usuarios', :path_names => { :new => 'novo', :edit => 'editar' }
+#   end
+# END
 
 ##### rspec #####
 run "rm -rf test"
@@ -231,20 +179,15 @@ ActionMailer::Base.smtp_settings = {
 END
 
 ##### app/controllers #####
-file "app/controllers/activations_controller.rb"
 file "app/controllers/application_controller.rb"
 file "app/controllers/home_controller.rb"
-file "app/controllers/passwords_controller.rb"
-file "app/controllers/user_sessions_controller.rb"
-file "app/controllers/users_controller.rb"
 
-
-gem "authlogic"
+##### devise #####
+generate :devise_install
+generate :devise_views
 
 # TODO: Admin
 
 rake "db:create:all"
 rake "db:migrate"
 rake "db:test:prepare"
-
-

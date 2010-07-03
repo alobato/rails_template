@@ -1,8 +1,0 @@
-<% title 'Recuperar senha' %>
-<h1>Recuperar senha</h1>
-
-<% form_tag recover_password_path do %>
-	<%= label_tag :email, 'Email' %><br />
-	<%= text_field_tag :email, nil %><br />
-	<%= submit_tag 'Enviar instruções' %>
-<% end %>
